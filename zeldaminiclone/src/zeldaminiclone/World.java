@@ -10,7 +10,8 @@ public class World {
 	public static List<Block> bloco = new ArrayList<Block>();
 	
 	public World() {
-		for(int xx = 0; xx < 15*2; xx++) {
+											
+		for(int xx = 0; xx < 15*2; xx++) {	//loop pra adicionar blocos ao redor da tela
 			bloco.add(new Block(xx*32,0));
 		}
 		for(int xx = 0; xx < 15*2; xx++) {
