@@ -19,7 +19,7 @@ public class Player extends Rectangle{ //Player vai herdar tudo da classe Rectan
 	
 	public void tick() { //essa logica de movimento esta aqui e nao na KeyPressed/Released pq nao vai ta dentro do frame looping e dentro do FPS que a gente colocou(1000/60 (60))  
 		
-		boolean moved = false;
+		boolean moved = false; //variavel criada pra animação nao ficar em loop, para parar qdo nao houver movimento
 		if(right && World.isFree(x+spd, y)) {
 			x+=spd;
 			moved = true;

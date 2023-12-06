@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		world = new World();
 	}
 	
-	public void tick() { //metodo em TODO jogoque é responsavel pela movimentação/colisao/etc
+	public void tick() { //metodo em TODO jogo que é responsavel pela movimentação/colisao/etc
 		player.tick();
 	}
 	
