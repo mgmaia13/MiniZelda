@@ -3,6 +3,8 @@ package zeldaminiclone;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Rectangle{ //Player vai herdar tudo da classe Rectangle
 	
@@ -13,6 +15,13 @@ public class Player extends Rectangle{ //Player vai herdar tudo da classe Rectan
 	
 	public int curFrames = 0, targetFrames = 15; //a cada 60 frames passa 1 segundo (60FPS), entao 15 a gente sabe que eh menos de meio seg
 												 //logo, animação vai ser feita em menos de meio segundo
+	
+	public boolean shoot = false;
+	
+	public int dir = 1;
+	
+	public static List<Bullet> bullets = new ArrayList<Bullet>(); //transformou a lista em estatica
+	
 	public Player(int x, int y) {
 		super(x, y, 32, 32);
 	}
@@ -23,9 +32,11 @@ public class Player extends Rectangle{ //Player vai herdar tudo da classe Rectan
 		if(right && World.isFree(x+spd, y)) {
 			x+=spd;
 			moved = true;
+			dir = 1;
 		} else if(left && World.isFree(x-spd, y)) {
 			x-=spd;
 			moved = true;
+			dir = -1;
 		}
 		
 		if(up && World.isFree(x, y-spd)) {
@@ -47,6 +58,15 @@ public class Player extends Rectangle{ //Player vai herdar tudo da classe Rectan
 			}
 		}
 		
+		if(shoot) {
+			shoot = false; //pra ele nao ficar atirando
+			bullets.add(new Bullet(x,y,dir)); //criando uma bullet (continua linha de baixo)
+			//x e y indica de onde vai sair, no caso, da posiçao do player e o 1(agora dir) indica a direçao da bullet, no caso, positiva
+		}
+		
+		for(int i = 0; i < bullets.size(); i++) { //atualizar as bullets
+			bullets.get(i).tick();
+		}
 		
 	}
 	
@@ -54,6 +74,10 @@ public class Player extends Rectangle{ //Player vai herdar tudo da classe Rectan
 		//g.setColor(Color.blue);
 		//g.fillRect(x, y, width, height); //propriedades que a gente ja em da classe Rectangle
 		g.drawImage(Spritesheet.player_front[curAnimation],x,y,32,32,null);
+		
+		for(int i = 0; i < bullets.size(); i++) { //renderizando as bullets
+			bullets.get(i).render(g);
+		}
 	}
 
 }
